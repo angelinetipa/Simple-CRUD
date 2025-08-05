@@ -1,0 +1,32 @@
+{% extends 'base.html' %} <!-- current template will inherit the structure and content of base.html, and you can override specific blocks within it -->
+
+{% block content %}
+    <div class="col-md-6 offset-md-3">
+        <!-- <h1>Add Record</h1> -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <br>
+                <div class="card" style="width: 40rem;">
+                    <div class="card-header">
+                        <h3>Update Record</h3>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Last Name{{ form.last_name }}</li><!-- form is from def add_record -->
+                        <li class="list-group-item">First Name{{ form.first_name }}</li>
+                        <li class="list-group-item">Middle Name{{ form.middle_name }}</li>
+                        <li class="list-group-item">Suffix{{ form.suffix }}</li>
+                        <li class="list-group-item">Gender{{ form.gender }}</li>
+                        <li class="list-group-item">Email{{ form.email }}</li>
+                        <li class="list-group-item">Phone{{ form.phone }}</li>
+                        <li class="list-group-item">Address{{ form.address }}</li>
+                        <li class="list-group-item">Barangay{{ form.brgy }}</li>
+                        <li class="list-group-item">Upload Image{{ form.upload_image }}</li>
+                    </ul>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-success" title="Save">SAVE</button>
+                <a href="{% url 'home' %}" class="btn btn-secondary" title="BACK">BACK</a>
+                <h1></h1>
+        </form>
+    </div>
+{% endblock %}

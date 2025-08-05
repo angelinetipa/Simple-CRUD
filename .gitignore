@@ -1,0 +1,41 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+env/
+venv/
+.venv/
+virtual_env/
+
+# Django specific files
+*.log
+db.sqlite3
+media/
+static/
+
+# Environment variables / secrets
+.env
+*.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Pytest / coverage
+.coverage
+htmlcov/
+*.cover
+*.py,cover
+.cache
+nosetests.xml
+coverage.xml
+*.coveragerc
+
+# Migrations (optional — comment out if you want to keep them in git)
+# **/migrations/
+# !**/migrations/__init__.py

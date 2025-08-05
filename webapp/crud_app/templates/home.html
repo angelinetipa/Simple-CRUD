@@ -1,0 +1,106 @@
+{% extends 'base.html' %} <!-- current template will inherit the structure and content of base.html, and you can override specific blocks within it -->
+
+{% block content %}
+    {% if user.is_authenticated %} <!-- user from the views.py  -->
+        <br>
+        <h2>Customer Records</h2>
+        {% if records %} <!-- records from the views.py  -->
+            <table class="table table-bordered table-hover caption-top">
+                <caption>List of customers</caption>
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col"style="text-align: center;">ID</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Middle Name</th>
+                    <th scope="col">Suffix</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col"style="text-align: center;">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %} <!-- records from the views.py  -->
+                        <tr>
+                            <th style="text-align: center;">{{ record.id }}</th>
+                            <td>{{ record.last_name }}</td>
+                            <td>{{ record.first_name }}</td>
+                            <td>{{ record.middle_name }}</td>
+                            <td>{{ record.suffix }}</td>
+                            <td>{{ record.gender }}</td>
+                            <td style="text-align: center;">
+                            <!--looks up a pattern defined in urls.py with the name 'details' and passes record.id as a parameter-->
+                            <a href="{% url 'details' record.id %}" class="btn btn-outline-primary btn-sm " title="Details">
+                                <i class="bx bx-detail"></i> <!--icon from library of boxicons-->
+                            </a>
+                            <!-- update -->
+                            <a href="{% url 'update' record.id %}" class="btn btn-outline-success btn-sm" title="Update">
+                                <i class="bx bx-edit-alt"></i><!--icon from library of boxicons-->
+                            </a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ record.id }}" title="Delete">
+                                <i class="bx bx-trash"></i><!--icon from library of boxicons-->
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteModal{{ record.id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ record.id }}" aria-hidden="true"> 
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabe{{ record.id }}">Warning!
+                                                <i class="bx bx-x"></i>
+                                            </h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to delete this record?
+                                            </div>
+                                        <div class="modal-footer">
+                                            <a href="{% url 'delete' record.id %}" class="btn btn-success" title="Delete">Yes, delete it!</a>
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+    {% else %}
+        <br>
+        <br>
+        <br>
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <figure class="text-center">
+                        <br> 
+                        <blockquote class="blockquote">
+                        <h2>Create Read Update Delete</h2>
+                        </blockquote>
+                        <figcaption class="blockquote-footer">
+                            essential for interacting with databases and managing data.
+                        </figcaption>
+                    </figure>
+                    <br>
+                    <form method="POST" action="{% url 'home' %}">
+                    {% csrf_token %} <!--for security purpose -->
+                        <div class="mb-3 col-8 mx-auto">
+                            <input type="text" class="form-control" placeholder="Username" name="userName" required>
+                        </div>
+                        <div class="mb-4 col-8 mx-auto">
+                            <input type="password" class="form-control" placeholder="Password" name="passWord" required>
+                        </div>
+                        <!-- <button type="submit" class="btn btn-success">Login</button> -->
+                        <div class="d-grid gap-2 mb-8 col-8 mx-auto">
+                            <button class="btn btn-primary" type="submit" title="Log In">Log In</button>
+                        </div>   
+                    </form>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>    
+    {% endif %}
+{% endblock %}
